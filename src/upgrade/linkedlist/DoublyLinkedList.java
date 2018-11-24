@@ -1,13 +1,20 @@
 package upgrade.linkedlist;
 
 public class DoublyLinkedList {
-
     private Node HEAD;
     private Node TAIL;
+    private int counter = 0;
+
+    public DoublyLinkedList(){
+        HEAD = new Node(null);
+        TAIL = HEAD;
+        counter++;
+    }
 
     public DoublyLinkedList(Object value){
         HEAD = new Node(value);
         TAIL = HEAD;
+        counter++;
     }
 
     public void add(Object value){
@@ -16,12 +23,23 @@ public class DoublyLinkedList {
         TAIL = TAIL.next;
         TAIL.previous = TEMP;
         TAIL.next = null;
+        counter++;
+    }
+
+    public void addHEAD(Object value){
+        Node TEMP = new Node(value);
+        Node CURRENT = HEAD;
+        HEAD = TEMP;
+        HEAD.next = CURRENT;
+        HEAD.previous = null;
+        counter++;
     }
 
     public void removeTAIL(){
         if(TAIL.previous != null){
             TAIL = TAIL.previous;
             TAIL.next = null;
+            counter--;
         } else {
             System.err.println("Can't remove the TAIL! Its' previous element is null");
         }
@@ -31,6 +49,7 @@ public class DoublyLinkedList {
         if(HEAD.next != null){
             HEAD = HEAD.next;
             HEAD.previous = null;
+            counter--;
         } else {
             System.err.println("Can't remove the HEAD! Its' next element is null");
         }
@@ -40,6 +59,7 @@ public class DoublyLinkedList {
         while(HEAD.next != null){
             TAIL = TAIL.previous;
             TAIL.next = null;
+            counter--;
         }
     }
 
@@ -56,6 +76,7 @@ public class DoublyLinkedList {
                 TEMP = TEMP.previous;
             }
         }
+        counter--;
     }
 
     public void showDoublyLinkedList(){
@@ -65,6 +86,10 @@ public class DoublyLinkedList {
             Current = Current.next;
         }
         System.out.print("null");
+    }
+
+    public int size(){
+        return counter;
     }
 
     public class Node{
