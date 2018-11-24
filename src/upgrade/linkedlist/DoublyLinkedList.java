@@ -4,7 +4,6 @@ public class DoublyLinkedList {
 
     private Node HEAD;
     private Node TAIL;
-    private Node TEMP;
 
     public DoublyLinkedList(Object value){
         HEAD = new Node(value);
@@ -13,20 +12,50 @@ public class DoublyLinkedList {
 
     public void add(Object value){
         TAIL.next = new Node(value);
-        TEMP = TAIL;
+        Node TEMP = TAIL;
         TAIL = TAIL.next;
         TAIL.previous = TEMP;
         TAIL.next = null;
     }
 
     public void removeTAIL(){
-        TAIL = TAIL.previous;
-        TAIL.next = null;
+        if(TAIL.previous != null){
+            TAIL = TAIL.previous;
+            TAIL.next = null;
+        } else {
+            System.err.println("Can't remove the TAIL! Its' previous element is null");
+        }
     }
 
     public void removeHEAD(){
-        HEAD = HEAD.next;
-        HEAD.previous = null;
+        if(HEAD.next != null){
+            HEAD = HEAD.next;
+            HEAD.previous = null;
+        } else {
+            System.err.println("Can't remove the HEAD! Its' next element is null");
+        }
+    }
+
+    public void removeDoublyLinkedList(){
+        while(HEAD.next != null){
+            TAIL = TAIL.previous;
+            TAIL.next = null;
+        }
+    }
+
+    public void removeNodeWithKey(Object value){
+        Node TEMP = TAIL;
+        Node FIX;
+        while(TEMP.previous != null){
+            if(TEMP.value == value){
+                FIX = TEMP.next;
+                TEMP = TEMP.previous;
+                TEMP.next = FIX;
+                break;
+            } else {
+                TEMP = TEMP.previous;
+            }
+        }
     }
 
     public void showDoublyLinkedList(){
